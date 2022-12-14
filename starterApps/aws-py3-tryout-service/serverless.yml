@@ -1,0 +1,31 @@
+service: aws-py3-tryout-service
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.8
+  timeout: 2        # Default timeout is 2s
+  memorySize: 512   # Default memorySize for all the underneath Lambda Function is 512MB
+
+  # My Custom IAM Role
+  # Role-1: Let Lambda can call ListFunction to get all Lambda Functions under the hood of the Service "lambda.ListFunction"
+  iam:
+    role:
+      statements:
+        - Effect: "Allow"
+          Action:
+            - "lambda:*"
+          Resource:
+            - "*"
+  
+  # My Custom Environment Variable 
+  environment:
+    FIRST_NAME: "Jahidul Arafat"  # Default Environment variable 
+
+functions:
+  hello:           # function 2
+    handler: handler.hello      # handler used by function 2
+    timeout: 6                  # timeout 6 seconds
+    memorySize: 256             # memory size for the second function is 256MB
+    description: "Scenario02: Long function which will PASS successfully"
