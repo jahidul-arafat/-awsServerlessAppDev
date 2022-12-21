@@ -21,13 +21,16 @@ IAM Dependencies:
 bClient = boto3.client("lambda")    # this require IAM: 
 
 def hello(event, context):
+    print("Received Event: ", event)
     allLambdaFuncList = bClient.list_functions() # lambda function would try to list all the function under its scope as defiend in <serverless.yaml>
+    
+    print("Person Executing this Script is {} from {}".format(event['name'], event['site']))
     
     body = {
         "message": "Hello {}!, Welcome to JA's Code Lab".format(os.environ['FIRST_NAME']),
         "statusCode": 200,
-        "eventPayload": event,
-        "All Lambda Functions": allLambdaFuncList,
+        "eventPayload": event
+        #"All Lambda Functions": allLambdaFuncList,
     }
     
     # return the boay as reponse, at the same time make sure the body info is logged in AWS CloudWatch

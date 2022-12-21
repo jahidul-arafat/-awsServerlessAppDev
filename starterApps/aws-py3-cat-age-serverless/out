@@ -1,0 +1,1 @@
+{"errorMessage": "'age'", "errorType": "KeyError", "stackTrace": ["  File \"/var/task/handler.py\", line 8, in hello\n    catAge = event['age'] * multiFactor\n"]}

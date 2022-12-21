@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: aws-py3-tryout-service
+service: aws-py3-cat-age-serverless
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
@@ -23,8 +23,12 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: python3.8
-  timeout: 2        # Default timeout is 2s
-  memorySize: 512   # Default memorySize for all the underneath Lambda Function is 512MB
+
+  # My Custom Environment Variable 
+  environment:
+    DEVELOPED_BY: "Jahidul Arafat"  # Global Default Environment variable under the Provider
+    FOR: "AWS"
+    FROM: "Oracle"
 
 # you can overwrite defaults here
 #  stage: dev
@@ -48,19 +52,6 @@ provider:
 #                - "Ref" : "ServerlessDeploymentBucket"
 #                - "/*"
 
-# My Custom IAM Role
-# Role-1: Let Lambda can call ListFunction to get all Lambda Functions under the hood of the Service "lambda.ListFunction"
-  iam:
-    role:
-      statements:
-        - Effect: "Allow"
-          Action:
-            - "lambda:*"
-          Resource:
-            - "*"
-# My Custom Environment Variable 
-  environment:
-    FIRST_NAME: "Jahidul Arafat"
 # you can define service wide environment variables here
 #  environment:
 #    variable1: value1
@@ -74,16 +65,8 @@ provider:
 #    - include-me-dir/**
 
 functions:
-#  hello-sort-timeout:           # function 1
-#    handler: handler.hello      # handler used by function 1
-#    #timeout: 3                  # overriding: timeout 3 seconds
-#    #memorySize: 128             # overriding: memory size for the first function is 128MB
-#    description: "Scenario01: Short function which will see a timeout error"
-  hello:           # function 2
-    handler: handler.hello      # handler used by function 2
-    timeout: 6                  # timeout 6 seconds
-    memorySize: 256             # memory size for the second function is 256MB
-    description: "Scenario02: Long function which will PASS successfully"
+  hello:
+    handler: handler.hello
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details

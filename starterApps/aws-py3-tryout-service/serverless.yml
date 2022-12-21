@@ -5,7 +5,7 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: python3.8
-  timeout: 2        # Default timeout is 2s
+  timeout: 6       # Default timeout is 2s
   memorySize: 512   # Default memorySize for all the underneath Lambda Function is 512MB
 
   # My Custom IAM Role
@@ -21,11 +21,28 @@ provider:
   
   # My Custom Environment Variable 
   environment:
-    FIRST_NAME: "Jahidul Arafat"  # Default Environment variable 
+    FIRST_NAME: "Jahidul Arafat"  # Global Default Environment variable 
+
+  # By Default, Deploy all the Lambda Function under a VPC
+  # By default Lambda Functions are not Launched in a VPC
+  # however, you can override this at individual Lambda Function level
+  # vpc:
+  #   securityGroupIds:
+  #     - sg-0705d72bf3e77d4a4    #securityGroupId1
+    
+  #   subnetIds:
+  #     - subnet-016f0f2bbf87d624b  #subnetId1
+  #     - subnet-0bee02c9cbd4a46eb  #subnetId2
 
 functions:
-  hello:           # function 2
+  hello-x:           # function 2
     handler: handler.hello      # handler used by function 2
-    timeout: 6                  # timeout 6 seconds
+    #timeout: 6                  # timeout 6 seconds
     memorySize: 256             # memory size for the second function is 256MB
-    description: "Scenario02: Long function which will PASS successfully"
+    description: "Scenario 01: Not overridign the Global Default Variable!!"
+  hello-y:
+    handler: handler.hello
+    description: "Scenario 02: Overriding the Global Default variable!!"
+    environment:
+      FIRST_NAME: guchu
+
